@@ -1,6 +1,4 @@
 export interface Product {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
   id: number;
   property_values: {
     property_id: number;
@@ -8,11 +6,19 @@ export interface Product {
   }[];
 }
 
-export interface Property {
+export interface BaseProperty {
   id: number;
   name: string;
-  type: "string" | "number" | "enumerated";
 }
+
+export type Property =
+  | (BaseProperty & {
+      type: "string" | "number";
+    })
+  | (BaseProperty & {
+      type: "enumerated";
+      values: string[];
+    });
 
 export interface Operator {
   id: string;
@@ -22,4 +28,10 @@ export interface Operator {
 export type NormalizedProduct = {
   id: number;
   [propertyName: string]: string | number | null;
+};
+
+export type Filter = {
+  property: Property;
+  operator: Operator;
+  value?: string | number;
 };

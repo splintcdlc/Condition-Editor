@@ -1,14 +1,11 @@
 import type { Property, NormalizedProduct } from "../types";
 
-interface ProductsTableProps {
+type Props = {
   products: NormalizedProduct[];
   properties: Property[];
-}
+};
 
-const ProductsTable: React.FC<ProductsTableProps> = ({
-  products,
-  properties,
-}) => {
+const ProductsTable = ({ products, properties }: Props) => {
   if (!products.length || !properties.length)
     return <p>No products to display.</p>;
 

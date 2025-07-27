@@ -1,40 +1,56 @@
-import React from "react";
 import type { Property, Operator } from "../types";
+import { validOperatorsByType } from "../utils/operatorConfig";
 
-interface ProductFilterBarProps {
+type Props = {
   properties: Property[];
-  operators: Operator[];
+  allOperators: Operator[];
   selectedProperty: Property | undefined;
   setSelectedProperty: (property: Property) => void;
   selectedOperator: string;
   setSelectedOperator: (operator: string) => void;
   inputValue: string;
   setInputValue: (value: string) => void;
-}
+};
 
-const ProductFilterBar: React.FC<ProductFilterBarProps> = ({
+const ProductFilterBar = ({
   properties,
-  operators,
+  allOperators,
   selectedProperty,
   setSelectedProperty,
   selectedOperator,
   setSelectedOperator,
   inputValue,
   setInputValue,
-}) => {
+}: Props) => {
   const selectedPropObj = properties.find((p) => p.id === selectedProperty?.id);
+
+  const validOperatorsIds =
+    selectedProperty && selectedProperty.type
+      ? validOperatorsByType[selectedProperty.type]
+      : [];
+  const filteredOperators = allOperators.filter((op) =>
+    validOperatorsIds.includes(op.id)
+  );
+  const isInputDisabled =
+    selectedOperator === "any" || selectedOperator === "none";
+
+  console.log("Selected property:", selectedProperty);
 
   return (
     <div style={{ display: "flex", gap: "1rem", margin: "1rem 0" }}>
       {/* Properties dropdown */}
       <select
-        value={selectedProperty?.id || ""}
+        value={selectedProperty?.id}
         onChange={(e) => {
           const prop = properties.find((p) => p.id === Number(e.target.value));
-          if (prop) setSelectedProperty(prop);
+          if (prop) {
+            setSelectedProperty(prop);
+            setSelectedOperator(""); // Reset operator when property changes
+            setInputValue(""); // Reset input value when property changes
+          }
         }}
       >
-        <option value="">Select property</option>
+        <option value="">-- Select property --</option>
         {properties.map((prop) => (
           <option key={prop.id} value={prop.id}>
             {prop.name}
@@ -45,12 +61,16 @@ const ProductFilterBar: React.FC<ProductFilterBarProps> = ({
       {/* Operators dropdown */}
       <select
         value={selectedOperator}
-        onChange={(e) => setSelectedOperator(e.target.value)}
+        onChange={(e) => {
+          console.log("Selected operator:", e.target.value);
+          setSelectedOperator(e.target.value);
+          setInputValue("");
+        }}
         disabled={!selectedProperty}
       >
-        <option value="">Select operator</option>
-        {operators.map((op) => (
-          <option key={op.id} value={op.text}>
+        <option value="">-- Select operator --</option>
+        {filteredOperators.map((op) => (
+          <option key={op.id} value={op.id}>
             {op.text}
           </option>
         ))}
@@ -61,12 +81,12 @@ const ProductFilterBar: React.FC<ProductFilterBarProps> = ({
         <select
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          disabled={!selectedOperator}
+          disabled={!selectedOperator || isInputDisabled}
         >
-          <option value="">Select value</option>
-          {properties.map((p: Property) => (
-            <option key={p.id} value={p.id}>
-              {p.name}
+          <option value="">-- Select value --</option>
+          {selectedPropObj.values.map((value, index) => (
+            <option key={index} value={value}>
+              {value}
             </option>
           ))}
         </select>
@@ -75,7 +95,7 @@ const ProductFilterBar: React.FC<ProductFilterBarProps> = ({
           type={selectedPropObj?.type === "number" ? "number" : "text"}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          disabled={!selectedOperator}
+          disabled={!selectedOperator || isInputDisabled}
           placeholder="Enter value"
         />
       )}

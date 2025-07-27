@@ -5,13 +5,17 @@ import "./App.css";
 import loadDatastoreScript from "./utils/loadDatastoreScript";
 import normalizeProducts from "./utils/normalizeProducts";
 import ProductsTable from "./components/productsTable";
-import type { NormalizedProduct, Property } from "./types";
-import ProductFilterBar from "./components/ProductFilterBar";
+import type { Filter, NormalizedProduct, Operator, Property } from "./types";
+import ProductFilterBar from "./components/productFilterBar";
+import filterProducts from "./utils/filterProducts";
 
 function App() {
   const [products, setProducts] = useState<NormalizedProduct[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<NormalizedProduct[]>(
+    []
+  );
   const [properties, setProperties] = useState<Property[]>([]);
-  const [operators, setOperators] = useState([]);
+  const [operators, setOperators] = useState<Operator[]>([]);
   const [datastores, setDatastores] = useState<string[]>([]);
   const [selectedDatastore, setSelectedDatastore] = useState("");
   const [selectedProperty, setSelectedProperty] = useState<Property>();
@@ -26,6 +30,24 @@ function App() {
       .catch(() => setDatastores([]));
   }, []);
 
+  useEffect(() => {
+    if (selectedProperty && selectedOperator) {
+      const operatorObj = operators.find((op) => op.id === selectedOperator);
+      if (operatorObj) {
+        const filter: Filter = {
+          property: selectedProperty,
+          operator: operatorObj,
+          value: inputValue,
+        };
+        setFilteredProducts(filterProducts(products, filter));
+      } else {
+        setFilteredProducts(products);
+      }
+    } else {
+      setFilteredProducts(products);
+    }
+  }, [products, selectedProperty, selectedOperator, inputValue, operators]);
+
   const handleLoadDatastore = async () => {
     if (!selectedDatastore) return;
     try {
@@ -34,8 +56,15 @@ function App() {
       const datastore = loadDatastore();
       setProperties(datastore.properties);
       setOperators(datastore.operators);
+
       // Normalize products before setting
-      setProducts(normalizeProducts(datastore.products, datastore.properties));
+      const normalorizedProducts = normalizeProducts(
+        datastore.products,
+        datastore.properties
+      );
+      setProducts(normalorizedProducts);
+      setFilteredProducts(normalorizedProducts);
+
       // Reset filters
       setSelectedProperty(undefined);
       setSelectedOperator("");
@@ -71,7 +100,7 @@ function App() {
           <h2>Products</h2>
           <ProductFilterBar
             properties={properties}
-            operators={operators}
+            allOperators={operators}
             selectedProperty={selectedProperty}
             setSelectedProperty={setSelectedProperty}
             selectedOperator={selectedOperator}
@@ -79,7 +108,7 @@ function App() {
             inputValue={inputValue}
             setInputValue={setInputValue}
           />
-          <ProductsTable products={products} properties={properties} />
+          <ProductsTable products={filteredProducts} properties={properties} />
         </div>
       </div>
     </>
