@@ -85,7 +85,7 @@ function App() {
             value={selectedDatastore}
             onChange={(e) => setSelectedDatastore(e.target.value)}
           >
-            <option value="">Select a datastore</option>
+            <option value="">-- Select a datastore --</option>
             {datastores.map((ds) => (
               <option key={ds} value={ds}>
                 {ds}
