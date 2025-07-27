@@ -14,6 +14,11 @@ export interface Property {
   type: "string" | "number" | "enumerated";
 }
 
+export interface Operator {
+  id: string;
+  text: string;
+}
+
 export type NormalizedProduct = {
   id: number;
   [propertyName: string]: string | number | null;

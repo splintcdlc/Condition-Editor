@@ -5,14 +5,18 @@ import "./App.css";
 import loadDatastoreScript from "./utils/loadDatastoreScript";
 import normalizeProducts from "./utils/normalizeProducts";
 import ProductsTable from "./components/productsTable";
-import type { NormalizedProduct } from "./types";
+import type { NormalizedProduct, Property } from "./types";
+import ProductFilterBar from "./components/ProductFilterBar";
 
 function App() {
   const [products, setProducts] = useState<NormalizedProduct[]>([]);
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState<Property[]>([]);
   const [operators, setOperators] = useState([]);
   const [datastores, setDatastores] = useState<string[]>([]);
   const [selectedDatastore, setSelectedDatastore] = useState("");
+  const [selectedProperty, setSelectedProperty] = useState<Property>();
+  const [selectedOperator, setSelectedOperator] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>("");
 
   // Fetch datastore list from /data folder
   useEffect(() => {
@@ -32,6 +36,10 @@ function App() {
       setOperators(datastore.operators);
       // Normalize products before setting
       setProducts(normalizeProducts(datastore.products, datastore.properties));
+      // Reset filters
+      setSelectedProperty(undefined);
+      setSelectedOperator("");
+      setInputValue("");
     } catch {
       alert("Failed to load datastore script.");
     }
@@ -61,6 +69,16 @@ function App() {
         </div>
         <div>
           <h2>Products</h2>
+          <ProductFilterBar
+            properties={properties}
+            operators={operators}
+            selectedProperty={selectedProperty}
+            setSelectedProperty={setSelectedProperty}
+            selectedOperator={selectedOperator}
+            setSelectedOperator={setSelectedOperator}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+          />
           <ProductsTable products={products} properties={properties} />
         </div>
       </div>

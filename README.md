@@ -1,1 +1,3 @@
 ## Condition Editor
+
+## ASSUMPTIONS
