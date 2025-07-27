@@ -23,7 +23,7 @@ const ValueInput = ({
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        disabled={!selectedOperator || isDisabled}
+        hidden={!selectedOperator || isDisabled}
         placeholder="Enter values separated by commas"
       />
     );
@@ -32,7 +32,7 @@ const ValueInput = ({
     <select
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
-      disabled={!selectedOperator || isDisabled}
+      hidden={!selectedPropObj.values.length}
     >
       <option value="">-- Select value --</option>
       {selectedPropObj.values.map((value, index) => (
@@ -46,7 +46,7 @@ const ValueInput = ({
       type={selectedPropObj?.type === "number" ? "number" : "text"}
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
-      disabled={!selectedOperator || isDisabled}
+      hidden={!selectedOperator || isDisabled}
       placeholder="Enter value"
     />
   );

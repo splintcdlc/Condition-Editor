@@ -32,7 +32,7 @@ const OperatorSelect = ({
         setSelectedOperator(e.target.value);
         resetFilters();
       }}
-      disabled={!selectedProperty}
+      hidden={!selectedProperty}
     >
       <option value="">-- Select operator --</option>
       {filteredOperators.map((op) => (
