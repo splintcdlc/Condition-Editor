@@ -13,11 +13,16 @@ const ValueInput = ({
   setInputValue,
   selectedOperator,
 }: Props) => {
-  const isDisabled = selectedOperator === "any" || selectedOperator === "none";
+  const isDisabled =
+    selectedOperator === "any" ||
+    selectedOperator === "none" ||
+    selectedOperator === "";
   const isAnyOfOperator = selectedOperator === "in";
 
   if (isAnyOfOperator) {
     // Always show a text input for "is any of" operator
+    // to allow entering multiple values
+    // separated by commas
     return (
       <input
         type="text"
@@ -32,7 +37,7 @@ const ValueInput = ({
     <select
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
-      hidden={!selectedPropObj.values.length}
+      hidden={!selectedPropObj.values.length || isDisabled}
     >
       <option value="">-- Select value --</option>
       {selectedPropObj.values.map((value, index) => (

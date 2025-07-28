@@ -7,7 +7,7 @@ type Props = {
   properties: Property[];
   allOperators: Operator[];
   selectedProperty: Property | undefined;
-  setSelectedProperty: (property: Property) => void;
+  setSelectedProperty: (property: Property | undefined) => void;
   selectedOperator: string;
   setSelectedOperator: (operator: string) => void;
   inputValue: string;
@@ -54,6 +54,19 @@ const ProductFilterBar = ({
         setInputValue={setInputValue}
         selectedOperator={selectedOperator}
       />
+
+      {selectedProperty && (
+        <button
+          onClick={() => {
+            setSelectedProperty(undefined);
+            setSelectedOperator("");
+            setInputValue("");
+          }}
+          style={{ alignSelf: "center" }}
+        >
+          Reset Filters
+        </button>
+      )}
     </div>
   );
 };

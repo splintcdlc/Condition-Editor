@@ -22,9 +22,14 @@ const filterProducts = (
       case "less_than":
         return typeof propValue === "number" && propValue < Number(value);
       case "in":
-        return Array.isArray(value)
-          ? value.includes(propValue)
-          : propValue === value;
+        if (typeof value === "string") {
+          const valuesArray = value
+            .split(",")
+            .map((v) => v.trim())
+            .filter((v) => v.length > 0);
+          return valuesArray.includes(String(propValue));
+        }
+        return false;
       case "any":
         return (
           propValue !== undefined && propValue !== null && propValue !== ""
