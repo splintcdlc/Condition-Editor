@@ -1,8 +1,6 @@
-# 🧪 Salsify Condition Editor – Take-Home Test
+# Salsify Condition Editor – Take-Home Test
 
 This project is a user interface for filtering a set of products using dynamic conditions based on property types and valid operations.
-
-## 🗺️ Guided Tour
 
 ### Features Implemented
 
