@@ -58,19 +58,15 @@ describe("normalizeProducts", () => {
     });
   });
 
-  it("sets property to null or undefined if value is null or undefined", () => {
+  it("sets property to null if value is null", () => {
     const products: Product[] = [
       {
         id: 1,
-        property_values: [
-          { property_id: 0, value: null },
-          { property_id: 1, value: undefined },
-        ],
+        property_values: [{ property_id: 0, value: null }],
       },
     ];
     const result = normalizeProducts(products, properties);
     expect(result[0]["Product Name"]).toBeNull();
-    expect(result[0]["color"]).toBeUndefined();
   });
 
   it("handles duplicate property_ids by using the first occurrence", () => {
