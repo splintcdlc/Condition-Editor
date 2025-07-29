@@ -32,11 +32,11 @@ This project is a user interface for filtering a set of products using dynamic c
 
 3.  Run dev server
 
-```bash
- npm run dev
-```
+    ```bash
+    npm run dev
+    ```
 
-4. Visit: http://localhost:5173
+4.  Visit: http://localhost:5173
 
 ## How to include a new datastore
 
@@ -76,7 +76,5 @@ The unit test coverage is limited; I focused on testing key functional files and
 The total development time for this project was approximately 16 hours.
 
 ## Thanks for the opportunity!
-
-##
 
 ## David Clemente
