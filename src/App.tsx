@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import loadDatastore from "./utils/loadDatastore";
 
-import "./App.css";
 import loadDatastoreScript from "./utils/loadDatastoreScript";
 import normalizeProducts from "./utils/normalizeProducts";
 import ProductsTable from "./components/productsTable";
@@ -75,15 +74,23 @@ function App() {
   };
 
   return (
-    <>
-      <h1>Condition Editor</h1>
-      <div className="card">
-        <div>
-          <label htmlFor="datastore-select">Choose datastore:</label>
+    <div className="p-4 w-full flex flex-col items-center">
+      <h1 className="p-4 bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text text-4xl font-bold text-center">
+        Condition Editor
+      </h1>
+      <div className="w-full p-4 sm:p-6 md:p-8">
+        <div className="flex flex-col sm:flex-row items-center justify-center align gap-4 rounded-xl shadow p-4 mb-8">
+          <label
+            htmlFor="datastore-select"
+            className="font-bold text-lg px-3 py-2"
+          >
+            Choose datastore:
+          </label>
           <select
             id="datastore-select"
             value={selectedDatastore}
             onChange={(e) => setSelectedDatastore(e.target.value)}
+            className="border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="">-- Select a datastore --</option>
             {datastores.map((ds) => (
@@ -92,12 +99,19 @@ function App() {
               </option>
             ))}
           </select>
-          <button onClick={handleLoadDatastore} disabled={!selectedDatastore}>
+          <button
+            onClick={handleLoadDatastore}
+            disabled={!selectedDatastore}
+            className="bg-blue-600 text-white px-4 py-2 rounded shadow transition-colors
+            disabled:bg-blue-200 disabled:text-blue-800"
+          >
             Load Datastore
           </button>
         </div>
-        <div>
-          <h2>Products</h2>
+        <div className="w-full flex flex-col items-center">
+          <h2 className="p-4 bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text text-4xl font-bold text-center">
+            Products
+          </h2>
           <ProductFilterBar
             properties={properties}
             allOperators={operators}
@@ -111,7 +125,7 @@ function App() {
           <ProductsTable products={filteredProducts} properties={properties} />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

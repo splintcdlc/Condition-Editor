@@ -27,7 +27,7 @@ const ProductFilterBar = ({
   const selectedPropObj = properties.find((p) => p.id === selectedProperty?.id);
 
   return (
-    <div style={{ display: "flex", gap: "1rem", margin: "1rem 0" }}>
+    <div className="flex w-full gap-4 p-4 justify-start">
       <PropertySelect
         properties={properties}
         selectedProperty={selectedProperty}
@@ -62,7 +62,7 @@ const ProductFilterBar = ({
             setSelectedOperator("");
             setInputValue("");
           }}
-          style={{ alignSelf: "center" }}
+          className="ml-auto bg-blue-600 text-white px-3 py-1 rounded shadow text-sm transition-colors disabled:bg-blue-200 disabled:text-blue-800"
         >
           Reset Filters
         </button>
