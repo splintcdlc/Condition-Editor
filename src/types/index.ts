@@ -2,7 +2,7 @@ export interface Product {
   id: number;
   property_values: {
     property_id: number;
-    value: string | number;
+    value: string | number | null | undefined;
   }[];
 }
 
