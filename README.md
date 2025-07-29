@@ -75,6 +75,17 @@ The unit test coverage is limited; I focused on testing key functional files and
 
 The total development time for this project was approximately 16 hours.
 
+## Posible improvements
+
+Given more time or broader requirements, I would consider:
+
+- Supporting multiple filters (AND/OR chaining)
+- Saving filters in the URL or localStorage
+- Use multiple input select for filter "Is any of"
+- End-to-end testing
+- Improving UI polish with filter tags and visual feedback
+- Structuring the app for internationalization
+
 ## Thanks for the opportunity!
 
 ## David Clemente

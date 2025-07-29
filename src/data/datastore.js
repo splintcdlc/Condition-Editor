@@ -15,7 +15,7 @@ window.datastore = {
     {
       id: 0,
       property_values: [
-        { property_id: 0, value: "Headphones das d asd as dads d as d sd a" },
+        { property_id: 0, value: "Headphones" },
         { property_id: 1, value: "black" },
         { property_id: 2, value: 5 },
         { property_id: 3, value: "electronics" },
