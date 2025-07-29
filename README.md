@@ -47,3 +47,38 @@ This project is a user interface for filtering a set of products using dynamic c
 2. Open `public/datastoresList.json` and add the new datastore's name to the array.
 
 3. The new datastore will then appear in the "Select datastore" dropdown and be available for use in the app.
+
+## How to Run Tests
+
+```bash
+npm run test
+```
+
+This runs all unit tests using Vitest.
+
+The unit test coverage is limited; I focused on testing key functional files and one component to best demonstrate my approach to unit testing. As my development time was increasing and I had some time constraints, I prioritized core functionality and representative tests.
+
+## Assumptions
+
+- Only one filter is allowed at a time (per spec).
+- Operators and property types are static but data content is dynamic.
+- Each property has a unique name and ID.
+- The app should work with any valid datastore.js loaded at runtime.
+- Empty values are treated as null.
+
+## Notes on Development Process
+
+- Focused on small, testable components and pure utility functions.
+- Prioritized readability and adaptability for changing data.
+- Avoided unnecessary state management libraries to keep it simple.
+- Tests were written to validate both logic and edge behavior.
+
+## Time spent
+
+The total development time for this project was approximately 16 hours.
+
+## Thanks for the opportunity!
+
+##
+
+## David Clemente
