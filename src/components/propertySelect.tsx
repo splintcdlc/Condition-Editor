@@ -15,7 +15,7 @@ const PropertySelect = ({
 }: Props) => {
   return (
     <select
-      value={selectedProperty?.id || ""}
+      value={selectedProperty?.id ?? ""}
       onChange={(e) => {
         const prop = properties.find((p) => p.id === Number(e.target.value));
         if (prop) {

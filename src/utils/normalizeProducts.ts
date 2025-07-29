@@ -9,14 +9,13 @@ const normalizedProducts = (
       id: product.id,
     };
 
-    product.property_values.forEach((propertyValue) => {
-      const property = properties.find(
-        (prop) => prop.id === propertyValue.property_id
+    properties.forEach((property) => {
+      const propertyValue = product.property_values.find(
+        (pv) => pv.property_id === property.id
       );
-      if (property) {
-        const propertyName = property.name;
-        normalizedProduct[propertyName] = propertyValue.value;
-      }
+      normalizedProduct[property.name] = propertyValue
+        ? propertyValue.value
+        : null;
     });
 
     return normalizedProduct;
