@@ -28,7 +28,6 @@ const OperatorSelect = ({
     <select
       value={selectedOperator}
       onChange={(e) => {
-        console.log("Selected operator:", e.target.value);
         setSelectedOperator(e.target.value);
         resetFilters();
       }}

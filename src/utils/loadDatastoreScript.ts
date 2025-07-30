@@ -1,6 +1,6 @@
 const loadDatastoreScript = (src: string): Promise<void> => {
   return new Promise((resolve, reject) => {
-    // Remove qualquer script anterior
+    // Remove any previous script with the same ID
     const oldScript = document.getElementById("datastore-script");
     if (oldScript) {
       oldScript.remove();
